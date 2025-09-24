@@ -1,0 +1,2 @@
+Your summary for program in ../../resource/correctJavaPrograms/minimum-cost-good-caption/Solution.java
+The code finds the optimal way to replace every 3, 4, or 5 consecutive characters in a string with a single lowercase letter, minimizing the total cost (sum of absolute differences between original and new characters). It uses dynamic programming to explore all possible segmentations.
