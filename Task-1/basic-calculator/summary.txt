@@ -1,2 +1,2 @@
 Your summary for program in ../../resource/correctJavaPrograms/basic-calculator/Solution.java
-This Java code calculates the result of a mathematical expression given as a string, handling parentheses, addition, and subtraction.
+Calculates arithmetic expressions with parentheses and signs. Uses stack for parenthesis handling. Supports addition, subtraction, and nested expressions.

@@ -1,2 +1,2 @@
 Your summary for program in ../../resource/correctJavaPrograms/robot-collisions/Solution.java
-Simulates robot collisions, updates healths, returns survivors' healths. Uses stack for 'R' robots, processes collisions with 'L' robots
+Simulates robots moving left or right, colliding and losing health. Returns surviving robots' healths after all collisions use stack to manage collisions efficiently
