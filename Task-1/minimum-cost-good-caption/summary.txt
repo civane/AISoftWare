@@ -1,2 +1,10 @@
 Your summary for program in ../../resource/correctJavaPrograms/minimum-cost-good-caption/Solution.java
-The code finds the optimal way to replace every 3, 4, or 5 consecutive characters in a string with a single lowercase letter, minimizing the total cost (sum of absolute differences between original and new characters). It uses dynamic programming to explore all possible segmentations.
+
+Finding the minimum cost good caption for a given input string.Input is an English-letter string and returns a new string constructed as follows: 
+-Segment Lengths: The input string is divided into segments of lengths 3, 4, or 5. The algorithm evaluates all possible segmentations to find the one with the minimum total cost.
+-Replacement Character: For each segment, the algorithm determines the lowercase letter (a-z) that, when used to replace all characters in the -segment, results in the minimum sum of absolute differences from the original characters' ASCII values.
+-Cost Minimization: The algorithm ensures that the total cost of replacing all segments is minimized by considering all possible segmentations and selecting the one with the lowest total cost.
+-Lexicographical Order: when segmentations have same total cost, the algorithm prefers the one that results in a lexicographically smaller string and lexicographical comparison should compare the entire string,Character-by-Character from the Start
+-Use dynamic programming with memoization to explore every legal partition efficiently; memoize the best State (cost, chosen letter, slice length) and reconstruct the string in the final 
+-compares complete solution strings rather than just individual characters
+- input shorter than 3 characters, return the empty string

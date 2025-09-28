@@ -136,19 +136,62 @@ def semantic_similarity(candidate_code, reference_code):
 
 def main():
     candidate_code = """
-    class Solution {
-        public String minCostGoodCaption(String caption) {
-            int i = 9;
+public class Solution {
+    public int numberOfSpecialChars(String word) {
+        int[] lowercase = new int[26];
+        int[] uppercase = new int[26];
+        int count = 0;
+        
+        for (int i = 0; i < word.length(); i++) {
+            char c = word.charAt(i);
+            if (c >= 'a' && c <= 'z') {
+                lowercase[c - 'a'] = i + 1; // Store 1-based index
+            } else if (c >= 'A' && c <= 'Z') {
+                if (uppercase[c - 'A'] == 0) {
+                    uppercase[c - 'A'] = i + 1; // Store 1-based index
+                }
+            }
         }
+        
+        for (int i = 0; i < 26; i++) {
+            if (lowercase[i] != 0 && uppercase[i] != 0 && lowercase[i] < uppercase[i]) {
+                count++;
+            }
+        }
+        return count;
     }
+}
     """
 
     reference_code = """
-    class Solution {
-        public String minCostGoodCaption(String caption) {
-            int i = 9;
+public class Solution {
+    public int numberOfSpecialChars(String word) {
+        Map<Character, Integer> firstUpperCasePos = new HashMap<>();
+        Map<Character, Integer> lastLowerCasePos = new HashMap<>();
+        
+        for(int i = 0; i < word.length(); i++) {
+            char ch = word.charAt(i);
+            if(Character.isLowerCase(ch)) {
+                lastLowerCasePos.put(ch, i);
+            }
+            else if(Character.isUpperCase(ch)) {
+                char lowerCh = Character.toLowerCase(ch);
+                if(!firstUpperCasePos.containsKey(lowerCh)) {
+                    firstUpperCasePos.put(lowerCh, i);
+                }
+            }
         }
+        int specialCharsCount = 0;
+        for(char ch: lastLowerCasePos.keySet()) {
+            if(firstUpperCasePos.containsKey(ch)) {
+                if(lastLowerCasePos.get(ch) < firstUpperCasePos.get(ch)) {
+                    specialCharsCount++;
+                }
+            }
+        }
+        return specialCharsCount;
     }
+}
     """
     bleu_score = compute_bleu(candidate_code, reference_code,n=4)
     print(f"CodeBLEU中的n-gram BLEU得分: {bleu_score:.4f}")
