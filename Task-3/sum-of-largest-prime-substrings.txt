@@ -1,0 +1,51 @@
+Bug Description:Integer overflow in the primality loop condition. The code uses divisor * divisor <= number with divisor an int and number a long; divisor*divisor is evaluated as int and can overflow for large divisor values, making the loop stop too early and causing some composite large numbers to be treated as prime.
+
+Bug Location: Line 7
+
+Suggested Patch:
+- for (int divisor = 5; divisor * divisor <= number; divisor += 6)
++ for (int divisor = 5; (long) divisor * divisor <= number; divisor += 6)
+Force the multiplication to be done in long to avoid overflow
+
+Fixed Version:
+public class Solution {
+    private boolean checkPrime(long number) {
+        if (number < 2) return false;
+        if (number == 2 || number == 3) return true;
+        if (number % 2 == 0 || number % 3 == 0) return false;
+        
+        for (int divisor = 5; (long) divisor * divisor <= number; divisor += 6) {
+            if (number % divisor == 0 || number % (divisor + 2) == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    public long sumOfLargestPrimes(String digits) {
+        long firstMax = 0, secondMax = 0, thirdMax = 0;
+        int length = digits.length();
+        
+        for (int start = 0; start < length; start++) {
+            long current = 0;
+            for (int end = start; end < length; end++) {
+                current = current * 10 + (digits.charAt(end) - '0');
+                if (current != firstMax && current != secondMax && current != thirdMax) {
+                    if (checkPrime(current)) {
+                        if (current > firstMax) {
+                            thirdMax = secondMax;
+                            secondMax = firstMax;
+                            firstMax = current;
+                        } else if (current > secondMax) {
+                            thirdMax = secondMax;
+                            secondMax = current;
+                        } else if (current > thirdMax) {
+                            thirdMax = current;
+                        }
+                    }
+                }
+            }
+        }
+        return firstMax + secondMax + thirdMax;
+    }
+}
